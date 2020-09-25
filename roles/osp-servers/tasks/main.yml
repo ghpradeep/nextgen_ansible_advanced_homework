@@ -2,6 +2,6 @@
 
 # tasks file for osp.servers
 - include_tasks: tasks/db_server.yml
-- include_tasks: tasks/app1_server.yml
-- include_tasks: tasks/app2_server.yml
+- include_tasks: tasks/apps1_server.yml
+- include_tasks: tasks/apps2_server.yml
 - include_tasks: tasks/frontend_server.yml
