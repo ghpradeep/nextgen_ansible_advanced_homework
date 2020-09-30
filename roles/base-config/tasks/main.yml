@@ -8,6 +8,9 @@
     replace: 'Defaults  !requiretty'
     backup: yes
 
+- name: remove old report
+  shell: rm -rf /etc/yum.repos.d/internal.repo
+
 - name: enable repos
   copy:
     src: open_three-tier-app.repo
