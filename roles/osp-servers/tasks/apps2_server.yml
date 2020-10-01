@@ -6,7 +6,7 @@
     image: rhel-guest
     meta: group=apps,deployment_name=qa
     flavor: m1.medium
-    security_groups: app_servers
+    security_groups: apps
     key_name: ansible_ssh
     wait: yes
     nics:
