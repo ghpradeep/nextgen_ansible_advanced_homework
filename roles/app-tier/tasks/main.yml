@@ -1,45 +1,26 @@
 ---
-# tasks file for roles/tomcat
-- name: install tomcat
+- name: install {{ payload }}
   yum:
-    name: tomcat
+    name: "{{ payload }}"
     state: latest
 
-- name: create ansible tomcat directory
+- name: enable {{ payload }} at boot
+  service:
+    name: "{{ payload }}"
+    enabled: yes
+
+- name: create tomcat default web directory
   file:
-    path: /usr/share/tomcat/webapps/ROOT
+    path: "{{ tomcat_web_root }}"
     state: directory
 
-- name: copy static index.html to tomcat webapps/ansible/index.html
+- name: copy static index.html to tomcat webroot
   template:
     src: index.html.j2
-    dest: /usr/share/tomcat/webapps/ROOT/index.html
+    dest: "{{ tomcat_web_root }}/index.html"
     mode: 0644
 
-- block:
-  - name: create ansible tomcat directory
-    file:
-        path: /usr/share/tomcat/webapps/ansible
-        state: directory
-  - name: copy static index.html to tomcat webapps/ansible/index.html
-    template:
-        src: index.html.app1
-        dest: /usr/share/tomcat/webapps/ansible/index.html
-  when: inventory_hostname == "app1"
-
-- block:
-  - name: create ansible tomcat directory
-    file:
-        path: /usr/share/tomcat/webapps/ansible
-        state: directory
-  - name: copy static index.html to tomcat webapps/ansible/index.html
-    template:
-        src: index.html.app2
-        dest: /usr/share/tomcat/webapps/ansible/index.html
-  when: inventory_hostname == "app2"
-
-- name: start tomcat
+- name: restart tomcat
   service:
-    name: tomcat
-    state: started
-    enabled: yes
+    name: "{{ payload }}"
+    state: restarted
