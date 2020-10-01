@@ -4,11 +4,12 @@
   tasks:
   - name: OpenStack servers
     os_server_facts:
-     cloud: ospcloud
+     cloud: openstack
      server: 'frontend'
     register: openstack_info
     tags:
       - osp.smoke
+
   - name: Curl website
     uri:
      url: "http://{{item.public_v4}}"
@@ -18,6 +19,7 @@
     register: webpage
     tags:
       - osp.smoke
+
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
     when: "'Ansible has done its job' not in webpage.results[0].content"
